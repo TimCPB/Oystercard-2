@@ -5,6 +5,7 @@ describe Oystercard do
   let (:card1) {Oystercard.new}
   let (:card_with_money) {Oystercard.new(20)}
   let (:station) { double(:station) }
+  let (:exit_station) { double(:exit_station) }
 
   it "has a balance" do
   expect(subject.balance).to eq(0)
@@ -60,12 +61,12 @@ describe Oystercard do
 
     describe '#touch_out' do
       it "should change #in_journey to false" do
-        subject.touch_out
+        subject.touch_out(exit_station)
         expect(subject).not_to be_in_journey
       end
       it "should deduct the minimum fare from the card" do
         min_fare = Oystercard::MINIMUM_FARE
-        expect { subject.touch_out }.to change{ subject.balance }.by(-min_fare)
+        expect { subject.touch_out(exit_station) }.to change{ subject.balance }.by(-min_fare)
       end
     end
   end
@@ -80,7 +81,7 @@ describe Oystercard do
     it 'forgets entry station' do
       ex_card = card_with_money
       ex_card.touch_in(station)
-      expect(ex_card.touch_out).to eq(nil)
+      expect(ex_card.touch_out(exit_station)).to eq(nil)
     end
   end
 
