@@ -3,7 +3,8 @@ require 'oystercard'
 describe Oystercard do
 
   let (:card1) {Oystercard.new}
-  let (:card_with_money) {Oystercard.new(20)} 
+  let (:card_with_money) {Oystercard.new(20)}
+  let (:station) { double(:station) }
 
   it "has a balance" do
   expect(subject.balance).to eq(0)
@@ -40,7 +41,7 @@ describe Oystercard do
   context "no top up" do
     describe "#touch_in" do
       it "should raise_error 'No money' if balance is below min_fare" do
-        expect { subject.touch_in }.to raise_error( "No money" )
+        expect { subject.touch_in(station) }.to raise_error( "No money" )
       end
     end
   end
@@ -48,15 +49,12 @@ describe Oystercard do
   context "top_up 5" do
     before do
       subject.top_up(5)
-      subject.touch_in
+      subject.touch_in(station)
     end
 
     describe '#touch_in' do
       it "should change #in_journey to true" do
         expect(subject).to be_in_journey
-      end
-      xit "stores current entry station" do
-        expect(subject.current_station).to eq(current_station)
       end
     end
 
@@ -71,4 +69,19 @@ describe Oystercard do
       end
     end
   end
+
+  context "touch in/saving station" do
+    it "remembembers the entry station" do
+      expect(card_with_money.touch_in(station)).to eq(station)
+    end
+  end
+
+  context "touch out/forgetting entry station" do
+    it 'forgets entry station' do
+      ex_card = card_with_money
+      ex_card.touch_in(station)
+      expect(ex_card.touch_out).to eq(nil)
+    end
+  end
+
 end
