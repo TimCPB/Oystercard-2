@@ -2,9 +2,15 @@ require 'oystercard'
 
 describe Oystercard do
 
+  let (:card1) {Oystercard.new}
+  let (:card_with_money) {Oystercard.new(20)} 
 
   it "has a balance" do
   expect(subject.balance).to eq(0)
+  end
+
+  it "receives a top up when initialized" do
+    expect(card_with_money.instance_variable_get(:@balance)).to eq(20)
   end
 
   it "tops up balance with" do
