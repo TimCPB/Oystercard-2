@@ -16,7 +16,11 @@ describe Oystercard do
   end
 
   it "tops up balance with" do
-  expect(subject.top_up(10)).to eq 10
+    expect(subject.top_up(10)).to eq 10
+  end
+
+  it "creates an empty hash (list_of_journeys) as instance variable" do
+    expect(card1.instance_variable_get(:@list_of_journeys)).to eq({})
   end
 
   it "errors with over limit" do
@@ -77,11 +81,18 @@ describe Oystercard do
     end
   end
 
-  context "touch out/forgetting entry station" do
+  context "touch out" do
     it 'forgets entry station' do
       ex_card = card_with_money
       ex_card.touch_in(station)
       expect(ex_card.touch_out(exit_station)).to eq(nil)
+    end
+    it 'saves in a hash the entry and the exit station' do
+      ex_card = card_with_money
+      ex_card.touch_in(station)
+      ex_card.touch_out(exit_station)
+      expect(ex_card.list_of_journeys).to eq({entry: station, exit: exit_station})
+      # expect(ex_card.instance_variable_get(:@list_of_journeys)).to eq({entry: station, exit: exit_station})
     end
   end
 

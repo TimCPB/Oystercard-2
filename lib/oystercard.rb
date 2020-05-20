@@ -8,6 +8,7 @@ DEFAULT_BALANCE = 0
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
+    @list_of_journeys = {}
   end
 
   def top_up(value)
