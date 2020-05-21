@@ -8,7 +8,7 @@ DEFAULT_BALANCE = 0
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
-    @list_of_journeys = {}
+    @list_of_journeys = []
   end
 
   def top_up(value)
@@ -23,7 +23,7 @@ DEFAULT_BALANCE = 0
 
   def touch_out(exit_station)
     deduct(MINIMUM_FARE)
-    @list_of_journeys = { entry: @entry_station, exit: exit_station }
+    @list_of_journeys.push({ entry: @entry_station, exit: exit_station })
     @entry_station = nil
   end
 

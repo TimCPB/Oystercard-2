@@ -19,8 +19,8 @@ describe Oystercard do
     expect(subject.top_up(10)).to eq 10
   end
 
-  it "creates an empty hash (list_of_journeys) as instance variable" do
-    expect(card1.instance_variable_get(:@list_of_journeys)).to eq({})
+  it "creates an empty array (list_of_journeys) as instance variable, to be filled with hashes" do
+    expect(card1.instance_variable_get(:@list_of_journeys)).to eq([])
   end
 
   it "errors with over limit" do
@@ -91,7 +91,7 @@ describe Oystercard do
       ex_card = card_with_money
       ex_card.touch_in(station)
       ex_card.touch_out(exit_station)
-      expect(ex_card.list_of_journeys).to eq({entry: station, exit: exit_station})
+      expect(ex_card.list_of_journeys).to eq([{entry: station, exit: exit_station}])
       # expect(ex_card.instance_variable_get(:@list_of_journeys)).to eq({entry: station, exit: exit_station})
     end
   end
