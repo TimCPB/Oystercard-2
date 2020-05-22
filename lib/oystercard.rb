@@ -30,10 +30,6 @@ DEFAULT_BALANCE = 0
     @journey.end_journey(exit_station)
   end
 
-  def in_journey?
-    !!@entry_station
-  end
-
   def limit_exceeded?(value)
     value + @balance > TOP_UP_LIMIT
   end

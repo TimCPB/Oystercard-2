@@ -14,4 +14,8 @@ class Journey
     @exit_station = exit_station
   end
 
+  def complete?
+    @list_of_journeys[-1] == { entry: @entry_station, exit: @exit_station }
+  end
+
 end

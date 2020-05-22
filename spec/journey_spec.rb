@@ -25,4 +25,12 @@ describe Journey do
     expect(subject.list_of_journeys).to eq journey
   end
 
+  context '#complete?' do
+    it 'should know whether a journey is complete' do
+      subject.start_journey("Angel")
+      subject.end_journey("Bond")
+      expect(subject.complete?).to be true
+    end
+  end
+
 end
