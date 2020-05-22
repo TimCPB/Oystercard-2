@@ -1,3 +1,5 @@
+require 'journey'
+
 class Oystercard
 
 TOP_UP_LIMIT = 90
@@ -9,6 +11,7 @@ DEFAULT_BALANCE = 0
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
     @list_of_journeys = []
+    @journey = Journey.new
   end
 
   def top_up(value)
@@ -18,7 +21,7 @@ DEFAULT_BALANCE = 0
 
   def touch_in(entry_station)
     raise "No money" if balance < MINIMUM_FARE
-    @entry_station = entry_station
+    @journey.start_journey(entry_station)
   end
 
   def touch_out(exit_station)
